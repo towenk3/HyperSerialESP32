@@ -2,7 +2,7 @@
 *
 *  MIT License
 *
-*  Copyright (c) 2023 awawa-dev
+*  Copyright (c) 2024 awawa-dev
 *
 *  https://github.com/awawa-dev/HyperSerialESP32
 *
@@ -60,6 +60,10 @@ bool serialTaskHandler()
 			base.queueEnd = incomingSize - left;
 		}
 	}
+
+#if defined(LED_POWER_PIN)
+	powerControl.update(incomingSize > 0);
+#endif
 
 	return (incomingSize > 0);
 }

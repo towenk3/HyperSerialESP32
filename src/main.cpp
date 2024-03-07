@@ -2,7 +2,7 @@
 *
 *  MIT License
 *
-*  Copyright (c) 2023 awawa-dev
+*  Copyright (c) 2024 awawa-dev
 *
 *  https://github.com/awawa-dev/HyperSerialESP32
 *
@@ -156,7 +156,14 @@
 #endif
 
 #define SerialPort Serial
+
+#if defined(LED_POWER_PIN)
+	#pragma message(VAR_NAME_VALUE(LED_POWER_PIN))
+	#include "powercontrol.h"
+#endif
+
 #include "main.h"
+
 
 /**
  * @brief separete thread for handling incoming data using cyclic buffer
@@ -230,6 +237,12 @@ void setup()
 
 		//Serial.flush();
 		delay(50);
+	#endif
+
+	#if defined(LED_POWER_PIN)
+		Serial.write("LED_POWER_PIN = ");
+		Serial.println(LED_POWER_PIN);
+		powerControl.init();
 	#endif
 
 	if (multicore)
